@@ -20,4 +20,7 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    public String getEmail() {
+        return email;
+    }
 }
