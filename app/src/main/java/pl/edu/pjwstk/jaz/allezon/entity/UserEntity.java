@@ -1,7 +1,12 @@
 package pl.edu.pjwstk.jaz.allezon.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "\"user\"")
 public class UserEntity {
@@ -15,31 +20,4 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    public void setRole_id(Integer role_id) {
-        this.role_id = role_id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getRole_id() {
-        return role_id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

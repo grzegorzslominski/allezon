@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pjwstk.jaz.allezon.DTO.UserDTO;
+import pl.edu.pjwstk.jaz.allezon.entity.UserEntity;
 import pl.edu.pjwstk.jaz.allezon.repository.UserRepository;
 
 @RestController
@@ -17,7 +17,7 @@ public class LoginController {
     }
 
     @PostMapping("allezon/login")
-    public ResponseEntity<String> register(@RequestBody UserDTO user) {
+    public ResponseEntity<String> register(@RequestBody UserEntity user) {
         if (user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
             return new ResponseEntity<>("Email or password is empty.", HttpStatus.BAD_REQUEST);
         }

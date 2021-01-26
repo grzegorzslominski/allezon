@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import pl.edu.pjwstk.jaz.allezon.DTO.CategoryDTO;
 import pl.edu.pjwstk.jaz.allezon.entity.CategoryEntity;
 import pl.edu.pjwstk.jaz.allezon.repository.CategoryRepository;
 
@@ -26,18 +25,18 @@ public class CategoryController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("allezon/categories")
-    public ResponseEntity<String> addCategory(@RequestBody CategoryDTO categoryDTO) {
-        if (categoryRepository.findByName(categoryDTO.getName()) != null) {
+    public ResponseEntity<String> addCategory(@RequestBody CategoryEntity category) {
+        if (categoryRepository.findByName(category.getName()) != null) {
             return new ResponseEntity<>("Such an categories exists in the database.", HttpStatus.CONFLICT);
         }
-        categoryRepository.addCategory(categoryDTO);
+        categoryRepository.addCategory(category);
         return new ResponseEntity("Added categories", HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("allezon/categories")
-    public ResponseEntity<String> deleteCategory(@RequestBody CategoryDTO categoryDTO) {
-        CategoryEntity categoryEntity = categoryRepository.findByName(categoryDTO.getName());
+    public ResponseEntity<String> deleteCategory(@RequestBody CategoryEntity category) {
+        CategoryEntity categoryEntity = categoryRepository.findByName(category.getName());
         if (categoryEntity == null) {
             return new ResponseEntity<>("Such an categories not exists in the database.", HttpStatus.CONFLICT);
         }

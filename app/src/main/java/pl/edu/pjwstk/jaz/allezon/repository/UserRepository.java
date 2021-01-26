@@ -3,7 +3,6 @@ package pl.edu.pjwstk.jaz.allezon.repository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import pl.edu.pjwstk.jaz.allezon.DTO.UserDTO;
 import pl.edu.pjwstk.jaz.allezon.entity.UserEntity;
 import pl.edu.pjwstk.jaz.allezon.security.AuthenticationToken;
 import pl.edu.pjwstk.jaz.allezon.security.UserSession;
@@ -25,7 +24,7 @@ public class UserRepository {
         this.userSession = userSession;
     }
 
-    public void saveUser(UserDTO user) {
+    public void saveUser(UserEntity user) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(user.getEmail());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -56,10 +55,10 @@ public class UserRepository {
         }
     }
 
-    public boolean login(UserDTO userDTO) {
-        UserEntity userEntity = findByEmail(userDTO.getEmail());
+    public boolean login(UserEntity user) {
+        UserEntity userEntity = findByEmail(user.getEmail());
         if (userEntity != null) {
-            if (passwordEncoder.matches(userDTO.getPassword(), userEntity.getPassword())) {
+            if (passwordEncoder.matches(user.getPassword(), userEntity.getPassword())) {
                 userSession.logIn();
                 SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(userEntity, entityManager));
                 return true;

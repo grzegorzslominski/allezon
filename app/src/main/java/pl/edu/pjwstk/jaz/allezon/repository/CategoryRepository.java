@@ -1,7 +1,6 @@
 package pl.edu.pjwstk.jaz.allezon.repository;
 
 import org.springframework.stereotype.Repository;
-import pl.edu.pjwstk.jaz.allezon.DTO.CategoryDTO;
 import pl.edu.pjwstk.jaz.allezon.entity.CategoryEntity;
 
 import javax.persistence.EntityManager;
@@ -18,9 +17,9 @@ public class CategoryRepository {
         this.entityManager = entityManager;
     }
 
-    public void addCategory(CategoryDTO categoryDTO) {
+    public void addCategory(CategoryEntity category) {
         CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setName(categoryDTO.getName());
+        categoryEntity.setName(category.getName());
         entityManager.persist(categoryEntity);
     }
 
