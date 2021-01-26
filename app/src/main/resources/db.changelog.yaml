@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20201012_init.sql
+      author: Paweł Janowiak
+      sqlFile:
+        relativeToChangelogFile: true
+        stripComments: true
+        splitStatements: false
+        path: db.changelog/20201012_init.sql
+  - changeSet:
+      id: 20210117_allezon_structure.sql
+      author: Grzegorz Slominski
+      sqlFile:
+        relativeToChangelogFile: true
+        stripComments: true
+        splitStatements: false
+        path: db.changelog/20210117_allezon_structure.sql

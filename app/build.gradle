@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+group 'pl.edu.pjwstk.jaz'
+version '1.0-SNAPSHOT'
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.springframework.data:spring-data-commons'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
+    testImplementation 'io.rest-assured:rest-assured'
+
+    /*problem with version <2.3.0
+    Errors occurred while build effective model from
+    C:\Users\haven\.gradle\caches\modules-2\files-2.1\com.sun.xml.bind\jaxb-osgi\2.2.10\c926a537af564ec047ec6308df1d0d2a03364a86\jaxb-osgi-2.2.10.pom:
+    'dependencyManagement.dependencies.dependency.systemPath' for com.sun:tools:jar must specify an absolute path but is
+    ${tools.jar} in com.sun.xml.bind:jaxb-osgi:2.2.10*/
+    // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-osgi
+    compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.2'
+    // https://mvnrepository.com/artifact/org.testcontainers/postgresql
+    testCompile group: 'org.testcontainers', name: 'postgresql', version: '1.15.1'
+
+        compileOnly 'org.projectlombok:lombok:1.18.16'
+        annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+        testCompileOnly 'org.projectlombok:lombok:1.18.16'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '6.7'
+}
+build.dependsOn wrapper
+test {
+    useJUnitPlatform()
+}
