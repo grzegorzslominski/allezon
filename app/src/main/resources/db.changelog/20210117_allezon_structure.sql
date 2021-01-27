@@ -35,7 +35,7 @@ CREATE TABLE subcategory
     name        VARCHAR NOT NULL UNIQUE,
 
     PRIMARY KEY (id),
-    CONSTRAINT section_fk
+    CONSTRAINT category_fk
         FOREIGN KEY (category_id)
             REFERENCES category (id)
 );
@@ -44,7 +44,7 @@ CREATE TABLE auction
 (
     id          INT,
     author_id   INT     NOT NULL,
-    category_id INT     NOT NULL,
+    subcategory_id INT     NOT NULL,
     title       VARCHAR NOT NULL,
     description VARCHAR NOT NULL,
     price       DECIMAL NOT NULL,
@@ -53,9 +53,9 @@ CREATE TABLE auction
     CONSTRAINT user_fk
         FOREIGN KEY (author_id)
             REFERENCES "user" (id),
-    CONSTRAINT category_fk
-        FOREIGN KEY (category_id)
-            REFERENCES category (id)
+    CONSTRAINT subcategory_fk
+        FOREIGN KEY (subcategory_id)
+            REFERENCES subcategory (id)
 );
 
 CREATE TABLE auction_image

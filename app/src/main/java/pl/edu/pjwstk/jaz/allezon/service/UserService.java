@@ -4,6 +4,7 @@ package pl.edu.pjwstk.jaz.allezon.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.jaz.allezon.entity.UserEntity;
@@ -38,6 +39,7 @@ private final EntityManager entityManager;
             UserEntity userEntity1 = (UserEntity) userEntity.get();
             if (passwordEncoder.matches(user.getPassword(), userEntity1.getPassword())) {
                 userSession.logIn();
+                userSession.setUserId(((UserEntity) userEntity.get()).getId());
                 SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(userEntity1, entityManager));
                 return true;
             }

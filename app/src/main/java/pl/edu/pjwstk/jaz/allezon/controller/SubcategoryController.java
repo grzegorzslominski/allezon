@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@RestController
 public class SubcategoryController {
     private final CategoryRepository categoryRepository;
     private final SubcategoryRepository subcategoryRepository;
@@ -37,13 +38,13 @@ public class SubcategoryController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("allezon/subcategories")
-    public ResponseEntity<String> deleteCategory(@RequestBody SubcategoryEntity subcategory) {
-        Optional subcategoryEntity = subcategoryRepository.findByName(subcategory.getName());
-        if (subcategoryEntity.isEmpty()) {
+    @DeleteMapping("allezon/subcategories/{name}")
+    public ResponseEntity<String> deleteCategory(@PathVariable String name) {
+        if (subcategoryRepository.findByName(name).isEmpty()) {
             return new ResponseEntity<>("Such an categories not exists in the database", HttpStatus.NOT_FOUND);
         }
-        subcategoryRepository.deleteByName(subcategory.getName());
+        SubcategoryEntity subcategoryEntity = subcategoryRepository.findByName(name).get();
+        subcategoryRepository.delete(subcategoryEntity);
         return new ResponseEntity("Category removed", HttpStatus.OK);
     }
 

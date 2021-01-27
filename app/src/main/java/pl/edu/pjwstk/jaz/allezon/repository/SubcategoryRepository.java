@@ -7,9 +7,7 @@ import pl.edu.pjwstk.jaz.allezon.entity.SubcategoryEntity;
 import java.util.Optional;
 
 @Repository
-public interface SubcategoryRepository extends JpaRepository<SubcategoryEntity,Long> {
-
-    Optional<SubcategoryEntity> deleteByName (String name);
+public interface SubcategoryRepository extends JpaRepository<SubcategoryEntity, Long> {
 
     Optional<SubcategoryEntity> findByName(String name);
 
