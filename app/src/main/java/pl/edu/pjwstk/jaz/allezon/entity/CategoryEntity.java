@@ -2,9 +2,11 @@ package pl.edu.pjwstk.jaz.allezon.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@ToString
 @Setter
 @Getter
 @Entity
@@ -17,8 +19,4 @@ public class CategoryEntity {
     private String name;
 
 
-    @Override
-    public String toString() {
-        return "id=" + id + ", name='" + name;
-    }
 }

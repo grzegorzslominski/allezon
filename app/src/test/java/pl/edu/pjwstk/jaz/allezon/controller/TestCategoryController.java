@@ -72,7 +72,7 @@ public class TestCategoryController {
                 .when()
                 .delete("/api/allezon/categories")
                 .then()
-                .statusCode(equalTo(HttpStatus.SC_NO_CONTENT));
+                .statusCode(equalTo(HttpStatus.SC_OK));
 
         given()
                 .when()

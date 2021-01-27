@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.allezon.bean;
+package pl.edu.pjwstk.jaz.allezon.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
