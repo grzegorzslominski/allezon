@@ -26,7 +26,7 @@ public class SubcategoryController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("allezon/subcategories")
-    public ResponseEntity<String> addCategory(@RequestBody SubcategoryEntity subcategory) {
+    public ResponseEntity<String> addSubcategory(@RequestBody SubcategoryEntity subcategory) {
         if (subcategoryRepository.findByName(subcategory.getName()).isPresent()) {
             return new ResponseEntity<>("Such an subcategories exists in the database", HttpStatus.CONFLICT);
         }
@@ -39,7 +39,7 @@ public class SubcategoryController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("allezon/subcategories/{name}")
-    public ResponseEntity<String> deleteCategory(@PathVariable String name) {
+    public ResponseEntity<String> deleteSubcategory(@PathVariable String name) {
         if (subcategoryRepository.findByName(name).isEmpty()) {
             return new ResponseEntity<>("Such an categories not exists in the database", HttpStatus.NOT_FOUND);
         }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pl.edu.pjwstk.jaz.allezon.entity.AuctionEntity;
 import pl.edu.pjwstk.jaz.allezon.repository.AuctionRepository;
+import pl.edu.pjwstk.jaz.allezon.repository.CategoryRepository;
 import pl.edu.pjwstk.jaz.allezon.repository.SubcategoryRepository;
 import pl.edu.pjwstk.jaz.allezon.repository.UserRepository;
 import pl.edu.pjwstk.jaz.allezon.security.UserSession;
@@ -18,9 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class AuctionController {
-    private final  AuctionRepository auctionRepository;
+    private final AuctionRepository auctionRepository;
+   // private final CategoryRepository categoryRepository;
     private final SubcategoryRepository subcategoryRepository;
     private final UserSession userSession;
+
 
 
     @GetMapping("allezon/auctions")
@@ -32,11 +35,14 @@ public class AuctionController {
     @PostMapping("allezon/auctions")
     public ResponseEntity<String> addAuction(@RequestBody AuctionEntity auction) {
 
-
-        auction.setAuthorId(userSession.getUserId());
-        auctionRepository.save(auction);
-        return new ResponseEntity("Added auction", HttpStatus.CREATED);
-    }
+        if(subcategoryRepository.findById(auction.getSubcategoryId()).isPresent()) {
+            auction.setAuthorId(userSession.getUserId());
+            auctionRepository.save(auction);
+            return new ResponseEntity("Added auction", HttpStatus.CREATED);
+        }
+        else
+            return new ResponseEntity("Given subcategory does not exist", HttpStatus.NOT_FOUND);
+        }
 
 
 
@@ -46,8 +52,8 @@ public class AuctionController {
                 AuctionEntity auction = auctionRepository.findById(auctionId).get();
 
                 if (userSession.getUserId()==auction.getAuthorId()) {
-                   if(editAuction.getCategoryId()!=null&&subcategoryRepository.findById(editAuction.getCategoryId()).isPresent())
-                       auction.setCategoryId(editAuction.getCategoryId());
+                   if(editAuction.getSubcategoryId()!=null&&subcategoryRepository.findById(editAuction.getSubcategoryId()).isPresent())
+                       auction.setSubcategoryId(editAuction.getSubcategoryId());
                    if(editAuction.getTitle()!=null)
                        auction.setTitle(editAuction.getTitle());
                    if(editAuction.getDescription()!=null)
