@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import pl.edu.pjwstk.jaz.allezon.entity.CategoryEntity;
 import pl.edu.pjwstk.jaz.allezon.repository.CategoryRepository;
+import pl.edu.pjwstk.jaz.allezon.service.CategoryService;
+import pl.edu.pjwstk.jaz.allezon.service.SubcategoryService;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,8 @@ import java.util.Optional;
 @RestController
 public class CategoryController {
     private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
+    private final SubcategoryService subcategoryService;
 
 
     @GetMapping("allezon/categories")
@@ -26,6 +30,7 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("allezon/categories")
     public ResponseEntity<String> addCategory(@RequestBody CategoryEntity category) {
+        categoryService.addUndefinedCategories();
         if (categoryRepository.findByName(category.getName()).isPresent()) {
             return new ResponseEntity<>("Such an categories exists in the database.", HttpStatus.CONFLICT);
         }
@@ -34,13 +39,14 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("allezon/categories")
-    public ResponseEntity<String> deleteCategory(@RequestBody CategoryEntity category) {
-        Optional categoryEntity = categoryRepository.findByName(category.getName());
+    @DeleteMapping("allezon/categories/{name}")
+    public ResponseEntity<String> deleteCategory(@PathVariable String name) {
+        Optional categoryEntity = categoryRepository.findByName(name);
         if (categoryEntity.isEmpty()) {
             return new ResponseEntity<>("Such an categories not exists in the database.", HttpStatus.NOT_FOUND);
         }
-        categoryRepository.deleteByName(category.getName());
+        subcategoryService.changeCategoriesToUndefined(categoryRepository.findByName(name).get().getId());
+        categoryRepository.deleteByName(name);
         return new ResponseEntity("Category removed", HttpStatus.OK);
     }
 

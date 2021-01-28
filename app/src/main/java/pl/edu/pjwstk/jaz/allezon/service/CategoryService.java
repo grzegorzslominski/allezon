@@ -1,13 +1,22 @@
 package pl.edu.pjwstk.jaz.allezon.service;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.edu.pjwstk.jaz.allezon.entity.CategoryEntity;
 import pl.edu.pjwstk.jaz.allezon.repository.CategoryRepository;
 
-@RequiredArgsConstructor
+
+@AllArgsConstructor
 @Service
 public class CategoryService {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
+    public void addUndefinedCategories(){
+        if (categoryRepository.findByName("Undefined").isEmpty()){
+            CategoryEntity undefinedCategory = new CategoryEntity();
+            undefinedCategory.setName("Undefined");
+            categoryRepository.save(undefinedCategory);
+        }
+    }
 
 }
