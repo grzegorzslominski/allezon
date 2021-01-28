@@ -7,4 +7,8 @@ import pl.edu.pjwstk.jaz.allezon.entity.AuctionImageEntity;
 
 @Repository
 public interface AuctionImageRepository extends JpaRepository<AuctionImageEntity,Long> {
+
+    void deleteAllByAuctionId (Long auctionId);
+
+    AuctionImageEntity findFirstByAuctionId(Long auctionId);
 }

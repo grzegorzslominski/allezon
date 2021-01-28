@@ -11,4 +11,6 @@ import java.util.List;
 public interface AuctionParameterRepository extends JpaRepository<AuctionParameterEntity,Long> {
 
     List<AuctionParameterEntity> findAllByParameterId(Long parameterId);
+
+    void deleteAllByAuctionId (Long auctionId);
 }

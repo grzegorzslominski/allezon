@@ -5,10 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import pl.edu.pjwstk.jaz.allezon.entity.AuctionAndPhoto;
 import pl.edu.pjwstk.jaz.allezon.entity.AuctionEntity;
+import pl.edu.pjwstk.jaz.allezon.repository.AuctionImageRepository;
+import pl.edu.pjwstk.jaz.allezon.repository.AuctionParameterRepository;
 import pl.edu.pjwstk.jaz.allezon.repository.AuctionRepository;
 import pl.edu.pjwstk.jaz.allezon.repository.SubcategoryRepository;
 import pl.edu.pjwstk.jaz.allezon.security.UserSession;
+import pl.edu.pjwstk.jaz.allezon.service.AuctionService;
 
 import java.util.List;
 
@@ -18,11 +22,20 @@ public class AuctionController {
     private final AuctionRepository auctionRepository;
     private final SubcategoryRepository subcategoryRepository;
     private final UserSession userSession;
+    private final AuctionImageRepository auctionImageRepository;
+    private final AuctionParameterRepository auctionParameterRepository;
+    private final AuctionService auctionService;
 
 
     // lista wszystkich aukcji (tylko zalogowani)
-    @GetMapping("allezon/auctions")
+    @GetMapping("allezon/auctions/photo")
     public ResponseEntity<List<AuctionEntity>> getAuctions() {
+        return new ResponseEntity(auctionService.displayAuctionsAndFirstPhoto(), HttpStatus.OK);
+    }
+
+    //lista wszystkich aukcji z pierwszym zdjęciem
+    @GetMapping("allezon/auctions")
+    public ResponseEntity<List<AuctionAndPhoto>> getAuctionsAndPhoto() {
         return new ResponseEntity(auctionRepository.findAll(), HttpStatus.OK);
     }
 
@@ -45,6 +58,8 @@ public class AuctionController {
 
             if (userSession.getUserId() == auctionRepository.findById(auctionId).get().getAuthorId()) {
                 auctionRepository.delete(auctionRepository.findById(auctionId).get());
+                auctionImageRepository.deleteAllByAuctionId(auctionId);
+                auctionParameterRepository.deleteAllByAuctionId(auctionId);
                 return new ResponseEntity("The auction  has been deleted", HttpStatus.ACCEPTED);
             } else {
                 return new ResponseEntity<>("Deleted impossible, you are not the owner of the auction", HttpStatus.UNAUTHORIZED);
