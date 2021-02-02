@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "auction_image")
 public class AuctionImageEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column (name = "auction_id")

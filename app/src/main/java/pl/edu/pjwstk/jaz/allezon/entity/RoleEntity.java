@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "\"role\"")
 public class RoleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "role")
     private String role;

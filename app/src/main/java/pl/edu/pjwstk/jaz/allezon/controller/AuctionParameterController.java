@@ -29,7 +29,7 @@ public class AuctionParameterController {
         if(auctionRepository.findById(auctionId).isPresent()&&parameterRepository.findById(parameterAuction.getParameterId()).isPresent()) {
             if (userSession.getUserId() == auctionRepository.findById(auctionId).get().getAuthorId()) {
                 auctionParameterRepository.save(parameterAuction);
-                return new ResponseEntity("Auction parameter has been added", HttpStatus.ACCEPTED);
+                return new ResponseEntity("Auction parameter has been added", HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>("Adding an auction parameter impossible, you are not the owner of the auction", HttpStatus.UNAUTHORIZED);
             }

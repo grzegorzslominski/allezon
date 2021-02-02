@@ -69,4 +69,6 @@ public class TestRegisterController {
                 .body(equalTo("Such an email exists in the database."));
     }
 
+
+
 }

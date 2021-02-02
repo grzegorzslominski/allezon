@@ -27,13 +27,13 @@ public class AuctionController {
     private final AuctionService auctionService;
 
 
-    // lista wszystkich aukcji (tylko zalogowani)
+    // lista wszystkich aukcji  z pierwszym zdjęciem
     @GetMapping("allezon/auctions/photo")
     public ResponseEntity<List<AuctionEntity>> getAuctions() {
         return new ResponseEntity(auctionService.displayAuctionsAndFirstPhoto(), HttpStatus.OK);
     }
 
-    //lista wszystkich aukcji z pierwszym zdjęciem
+    //lista wszystkich aukcji
     @GetMapping("allezon/auctions")
     public ResponseEntity<List<AuctionAndPhoto>> getAuctionsAndPhoto() {
         return new ResponseEntity(auctionRepository.findAll(), HttpStatus.OK);

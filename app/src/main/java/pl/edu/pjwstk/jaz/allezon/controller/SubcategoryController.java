@@ -60,13 +60,13 @@ public class SubcategoryController {
     }
     //edycja podkategori (tylko admin)
     @PreAuthorize("hasAuthority('admin')")
-    @PatchMapping("allezon/subcategories/edit")
+    @PatchMapping("allezon/subcategories/edit/{nameSubcategoryToChange}")
     public ResponseEntity<String> editSubcategory(@PathVariable String nameSubcategoryToChange ,@RequestBody SubcategoryEntity subcategoryEntity) {
         Optional<SubcategoryEntity> subcategory = subcategoryRepository.findByName(nameSubcategoryToChange);
         if (subcategory.isEmpty()) {
             return new ResponseEntity<>("Such an subcategories not exists in the database", HttpStatus.CONFLICT);
         }
-        else if (subcategoryRepository.findByName(nameSubcategoryToChange).isPresent())
+        else if (subcategoryRepository.findByName(subcategoryEntity.getName()).isPresent())
         {
             return new ResponseEntity<>("Given name is already taken", HttpStatus.CONFLICT);
         }

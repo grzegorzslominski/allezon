@@ -24,7 +24,7 @@ public class AuctionImageController {
         if(auctionRepository.findById(auctionId).isPresent()) {
             if (userSession.getUserId() == auctionRepository.findById(auctionId).get().getAuthorId()) {
                 auctionImageRepository.save(imageAuction);
-                return new ResponseEntity("Photo has been added", HttpStatus.ACCEPTED);
+                return new ResponseEntity("Photo has been added", HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>("Adding an photo impossible, you are not the owner of the auction", HttpStatus.UNAUTHORIZED);
             }

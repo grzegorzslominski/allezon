@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "\"auction\"")
 public class AuctionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "author_id")
     private Long authorId;

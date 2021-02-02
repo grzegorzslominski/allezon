@@ -20,7 +20,7 @@ public class ParameterController {
     private final ParameterService parameterService;
 
     // lista parametrów (tylko zalogowani)
-    @GetMapping("allezon/parameter")
+    @GetMapping("allezon/parameters")
     public ResponseEntity<List<CategoryEntity>> getParameters() {
         return new ResponseEntity(parameterRepository.findAll(), HttpStatus.OK);
     }
@@ -28,7 +28,7 @@ public class ParameterController {
 
     //dodawanie parametrów (tylko admin)
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping("allezon/parameter")
+    @PostMapping("allezon/parameters")
     public ResponseEntity<String> addParameter(@RequestBody ParameterEntity parameter) {
         parameterService.addUndefinedParameter();
         if (parameterRepository.findByName(parameter.getName())!=null) {
@@ -41,7 +41,7 @@ public class ParameterController {
 
     //usuwanie parametrów (tylko admin)
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("allezon/parameter/{parameterName}")
+    @DeleteMapping("allezon/parameters/{parameterName}")
     public ResponseEntity<String> deleteParameter(@PathVariable String parameterName) {
         if (parameterRepository.findByName(parameterName)==null) {
             return new ResponseEntity<>("Such an parameter not exists in the database.", HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ public class ParameterController {
 
     //zmiana nazwy parametrów (tylko admin)
     @PreAuthorize("hasAuthority('admin')")
-    @PatchMapping("allezon/parameter/edit/{oldName}/{newName}")
+    @PatchMapping("allezon/parameters/edit/{oldName}/{newName}")
     public ResponseEntity<String> editParameter(@PathVariable String oldName , @PathVariable String newName) {
         ParameterEntity parameter = parameterRepository.findByName(oldName);
         if (parameter==null) {

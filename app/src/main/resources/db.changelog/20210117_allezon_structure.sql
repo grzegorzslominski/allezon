@@ -1,6 +1,6 @@
 CREATE TABLE "role"
 (
-    id   INT,
+    id   SERIAL,
     role VARCHAR NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
@@ -11,7 +11,7 @@ VALUES (1, 'admin'),
 
 CREATE TABLE "user"
 (
-    id       INT,
+    id       SERIAL,
     role_id  INT     NOT NULL,
     email    VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
@@ -23,14 +23,14 @@ CREATE TABLE "user"
 
 CREATE TABLE category
 (
-    id   INT,
+    id   SERIAL,
     name VARCHAR NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE subcategory
 (
-    id          INT,
+    id          SERIAL,
     category_id INT     NOT NULL,
     name        VARCHAR NOT NULL UNIQUE,
 
@@ -42,7 +42,7 @@ CREATE TABLE subcategory
 
 CREATE TABLE auction
 (
-    id          INT,
+    id          SERIAL,
     author_id   INT     NOT NULL,
     subcategory_id INT     NOT NULL,
     title       VARCHAR NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE auction
 
 CREATE TABLE auction_image
 (
-    id         INT,
+    id         SERIAL,
     auction_id INT     NOT NULL,
     url        VARCHAR NOT NULL,
 
@@ -72,14 +72,14 @@ CREATE TABLE auction_image
 
 CREATE TABLE parameter
 (
-    id   INT,
+    id   SERIAL,
     name VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE auction_parameter
 (
-    id           INT,
+    id           SERIAL,
     auction_id   INT     NOT NULL,
     parameter_id INT     NOT NULL,
     value        VARCHAR NOT NULL,

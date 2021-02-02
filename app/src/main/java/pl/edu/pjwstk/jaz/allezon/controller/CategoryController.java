@@ -55,7 +55,7 @@ public class CategoryController {
     public ResponseEntity<String> editCategory(@PathVariable String oldName , @PathVariable String newName) {
         Optional<CategoryEntity> category = categoryRepository.findByName(oldName);
         if (category.isEmpty()) {
-            return new ResponseEntity<>("Such an categories not exists in the database.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Such an categories not exists in the database.", HttpStatus.NOT_FOUND);
         }
         else if (categoryRepository.findByName(newName).isPresent())
         {
